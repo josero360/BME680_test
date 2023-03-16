@@ -3,6 +3,10 @@
 #include <Wire.h>               // Only needed for Arduino 1.6.5 and earlier
 #include "SSD1306Wire.h"        // legacy: #include "SSD1306.h"
 
+const uint8_t bsec_config_iaq[] = {
+#include "config/generic_33v_3s_4d/bsec_iaq.txt"
+};
+
 SSD1306Wire display(0x3c, SDA, SCL);  
 Bsec iaqSensor;
 
@@ -14,6 +18,7 @@ void setup() {
     display.flipScreenVertically();
     display.setFont(ArialMT_Plain_10);
 
+    iaqSensor.setConfig(bsec_config_iaq);
     Wire.begin();
 
     iaqSensor.begin(BME680_I2C_ADDR_SECONDARY, Wire);
